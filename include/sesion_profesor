@@ -1,0 +1,13 @@
+<?php
+	session_start();
+	$logType=$_SESSION['admin']; //Capturamos la session actual
+	$userActivo=$_SESSION['user']; //Capturamos el usuario activo en una variable que sera usada en las paginas de nuestra web
+	$urlRoot="http://iaw-ramses.zxq.net/sjotest"; //Variable que contiene la ruta principal de nuestro hosting
+	
+	if ($logType=="0"){
+	header("Location: $urlRoot/principal.php");
+	}
+	else if($logType!="1"){
+	header("Location: $urlRoot/index.php?mensaje=3");
+	}
+?>

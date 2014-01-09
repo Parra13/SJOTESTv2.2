@@ -1,0 +1,12 @@
+<?php
+$consulta="SELECT * FROM usuario WHERE administrador='0'"; //creamos la consulta
+	$query=mysql_query($consulta,$conexion); //lanzamos la consulta
+
+	while($usuario=mysql_fetch_array($query)){ //pasamos por los valores de la tabla y los introducimos en el select
+		$a=$usuario['userid'];  //capturamos el userid
+		$b=$usuario['nombre']; //capturamos el nombre
+		$c=$usuario['apellido1']; //captuarmos apellidos
+		$d=$usuario['apellido2'];
+		echo "<option value='".$a."'>".$c." ".$d.", ".$b."</option><br />"; //lo introducimos en las opciones del select 
+		}
+?>

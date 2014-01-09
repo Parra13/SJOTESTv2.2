@@ -1,0 +1,23 @@
+<?php
+$mensaje=$_GET['mensaje'];// mensajes de vuelta de password_modificado
+	if ($mensaje == 'password_cambiado'){ //cambio password
+		echo "<div style='color:#4F8A10;background-color:#DFF2BF;border:solid 1px;width:270px;padding:10px;'>
+		Pasword cambiado</div>";
+	}
+	if ($mensaje == 'password_incorrecta'){//password incorrecto
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		El password no es correcto</div>";
+	}	
+	if ($mensaje == 'password_no_coincide'){//los password no coincide
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		No coinciden los passwords</div>";
+	}
+	if ($mensaje == 'password_no_cambiado'){//modificado fail
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		El password no se ha podido cambiar</div>";
+	}
+	if ($mensaje == 'password_vacia'){//password incorrecto
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		Debes introducir tu password</div>";
+	}
+?>

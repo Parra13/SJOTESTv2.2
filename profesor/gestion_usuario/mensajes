@@ -1,0 +1,31 @@
+<?php
+$mensaje=$_GET['mensaje'];// mensajes de vuelta de gestion_del_usuario_seleccionado
+	if ($mensaje == 'borrado_ok'){ //borrado ok
+		echo "<div style='color:#4F8A10;background-color:#DFF2BF;border:solid 1px;width:270px;padding:10px;'>
+		Se ha borrado el usuario</div>";
+	}
+	if ($mensaje == 'borrado_fail'){//borrado fail
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		El usuario no se ha podido Borrar</div>";
+	}
+	if ($mensaje == 'modificado_ok'){//modificado ok
+		echo "<div style='color:#4F8A10;background-color:#DFF2BF;border:solid 1px;width:270px;padding:10px;'>
+		Se ha modificado el usuario</div>";
+	}
+	if ($mensaje == 'modificado_fail'){//modficado fail
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		No se ha podido modificar el usuario</div>";
+	}
+	if ($mensaje == 'usuario_existe'){//modficado fail
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		El nombre de usuario ya existe</div>";
+	}
+	if ($mensaje == 'segura_ok'){//segura ok
+		echo "<div style='color:#4F8A10;background-color:#DFF2BF;border:solid 1px;width:270px;padding:10px;'>
+		Se ha modificado la pregunta segura</div>";
+	}
+	if ($mensaje == 'segura_fail'){//segura fail
+		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+		No se ha podido modificar la pregunta segura</div>";
+	}
+?>

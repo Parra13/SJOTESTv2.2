@@ -1,8 +1,8 @@
 <?php
 $consulta="SELECT * FROM usuario WHERE administrador='0'"; //creamos la consulta
-	$query=mysql_query($consulta,$conexion); //lanzamos la consulta
+	$query=mysqli_query($conexion, $consulta); //lanzamos la consulta
 
-	while($usuario=mysql_fetch_array($query)){ //pasamos por los valores de la tabla y los introducimos en el select
+	while($usuario=mysqli_fetch_array($query)){ //pasamos por los valores de la tabla y los introducimos en el select
 		$a=$usuario['userid'];  //capturamos el userid
 		$b=$usuario['nombre']; //capturamos el nombre
 		$c=$usuario['apellido1']; //captuarmos apellidos

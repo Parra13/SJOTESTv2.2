@@ -1,11 +1,13 @@
-<?php
+<?php
+
 	$consulta="SELECT configuracion FROM configuracion WHERE nombre='preguntaSegura'"; //creamos consulta
-	$query=mysql_query($consulta,$conexion); //lanzamos la consulta
+	$query=mysqli_query($conexion, $consulta); //lanzamos la consulta
 	
-	while($pregunta=mysql_fetch_array($query)) //capturamos la configuracion
+	while($pregunta=mysqli_fetch_array($query)) //capturamos la configuracion
 	{ 
 		$preguntaSecreta=$pregunta['configuracion'];  		
 	
 		echo "<input type='text' name='preguntaSegura' value='".$preguntaSecreta."'/>";
-	}
+	}
+
 ?>

@@ -1,25 +1,47 @@
 <?php
-if(isset($_POST['users'])){ // sólo se ejecuta si se ha echo un post
-		$usercapturado = $_POST['users']; //recogemos en una variable el usuario
-			if($usercapturado == 'noseleccionado'){
-				echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
-				No has seleccionado usuario</div>";
-				exit(1);
-			}
-		
-		$consulta2="SELECT * FROM usuario WHERE userid='".$usercapturado."'"; //creamos la consulta
-		$query2=mysql_query($consulta2,$conexion); //lanzamos la consulta
-		$usuario2=mysql_fetch_array($query2); //introducimos los valores dentro de la vairable
-		echo "Usuario elegido: <br />";
-		echo "<form action='gestion_del_usuario_seleccionado.php' method='post'>"; //iniciamos formulario
-		echo "Nick : <input type='text' name='nick' value='".$usuario2['nick']."'><br />"; // capturamos el nick
-		echo "Nombre: <input type='text' name='nombre' value='".$usuario2['nombre']."'><br />"; // mostramos el nombre
-		echo "Primer Apellido: <input type='text' name='apellido1' value='".$usuario2['apellido1']."'><br />"; // mostramos el nombre
-		echo "Segundo Apellido: <input type='text' name='apellido2' value='".$usuario2['apellido2']."'><br />"; // mostramos el nombre		
-		echo "Fecha de creacion: <input type='text' value='".$usuario2['fecha']."' readonly='readonly'><br />"; // mostramos la fecha de creacion
-		echo "Fecha de creacion: <input type='hidden' name='userid' value='".$usuario2['userid']."'  readonly='readonly'>";
-		echo "<input type='submit' name='borrar' value='Eliminar Usuario'> &nbsp&nbsp"; //boton submit para borrar
-		echo "<input type='submit' name='modificar' value='Modificar Usuario'> "; // boton submit para modificar
-		echo "</form>";	
+if(isset($_POST['users'])){ // sólo se ejecuta si se ha echo un post
+
+		$usercapturado = $_POST['users']; //recogemos en una variable el usuario
+
+			if($usercapturado == 'noseleccionado'){
+
+				echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:220px;padding:10px;'>
+
+				No has seleccionado usuario</div>";
+
+				exit(1);
+
+			}
+
+		
+
+		$consulta2="SELECT * FROM usuario WHERE userid='".$usercapturado."'"; //creamos la consulta
+
+		$query2=mysqli_query($conexion, $consulta2); //lanzamos la consulta
+
+		$usuario2=mysqli_fetch_array($query2); //introducimos los valores dentro de la vairable
+
+		echo "Usuario elegido: <br />";
+
+		echo "<form action='gestion_del_usuario_seleccionado.php' method='post'>"; //iniciamos formulario
+
+		echo "Nick : <input type='text' name='nick' value='".$usuario2['nick']."'><br />"; // capturamos el nick
+
+		echo "Nombre: <input type='text' name='nombre' value='".$usuario2['nombre']."'><br />"; // mostramos el nombre
+
+		echo "Primer Apellido: <input type='text' name='apellido1' value='".$usuario2['apellido1']."'><br />"; // mostramos el nombre
+
+		echo "Segundo Apellido: <input type='text' name='apellido2' value='".$usuario2['apellido2']."'><br />"; // mostramos el nombre		
+
+		echo "Fecha de creacion: <input type='text' value='".$usuario2['fecha']."' readonly='readonly'><br />"; // mostramos la fecha de creacion
+
+		echo "Fecha de creacion: <input type='hidden' name='userid' value='".$usuario2['userid']."'  readonly='readonly'>";
+
+		echo "<input type='submit' name='borrar' value='Eliminar Usuario'> &nbsp&nbsp"; //boton submit para borrar
+
+		echo "<input type='submit' name='modificar' value='Modificar Usuario'> "; // boton submit para modificar
+
+		echo "</form>";	
+
 	}
 ?>

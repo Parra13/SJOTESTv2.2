@@ -43,37 +43,37 @@ session_destroy(); //Destrimos la sesion
 
 // Mensaje que se mostrara en caso de que se dejen campos vacios 
 
-$error_campo=$_GET['mensaje'];
+	$error_campo=$_GET['mensaje'];
 
-	if ($error_campo==2){	
+		if ($error_campo==2){	
 
-		echo "<div style='color: #D8000C;background-color: #FFBABA;border:solid 1px;width:320px;padding:10px;'>
+			echo "<div style='color: #D8000C;background-color: #FFBABA;border:solid 1px;width:320px;padding:10px;'>
 
-		El usuario o contrase&ntilde;a no son correctos</div>";
+			El usuario o contrase&ntilde;a no son correctos</div>";
 
-		exit(1);
+			exit(1);
 
-	}
+		}
 
-	if ($error_campo==1){	
+		if ($error_campo==1){	
 
-		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:320px;padding:10px;'>
+			echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:320px;padding:10px;'>
 
-		Para iniciar sesi&oacute;n no puedes dejar campos vacios</div>";
+			Para iniciar sesi&oacute;n no puedes dejar campos vacios</div>";
 
-		exit(2);
+			exit(2);
 
-	}
+		}
 
-	if ($error_campo==3){
+		if ($error_campo==3){
 
-		echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:320px;padding:10px;'>
+			echo "<div style='color:#D8000C;background-color:#FFBABA;border:solid 1px;width:320px;padding:10px;'>
 
-		Has intentado acceder a una pagina sin estar autenticado, por favor, autenticate.</div>";
+			Has intentado acceder a una pagina sin estar autenticado, por favor, autenticate.</div>";
 
-		exit(3);
+			exit(3);
 
-	}
+		}
 
 ?>
 

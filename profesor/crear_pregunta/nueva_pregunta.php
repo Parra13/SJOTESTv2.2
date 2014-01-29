@@ -35,7 +35,7 @@ include("../../include/menu.php");
 <!--Añadido por Rodrigo Parra  -->
 
 			<p><label>Examen: </label>
-							<select require name="ex"> <!-- Añadimos un imput para elegir a qué examen pertenece la pregunta -->
+							<select name="ex"> <!-- Añadimos un imput para elegir a qué examen pertenece la pregunta -->
 								<?php ## Abrimos una etiqueta php que, dentro del select haga los selects de la BD.
 			
 									$examen="SELECT `examen`.`tipo` FROM `Test`.`examen`"; /*Hacemos un select del tipo de examen*/

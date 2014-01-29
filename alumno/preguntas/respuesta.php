@@ -8,6 +8,8 @@ include ('../../include/sesion_alumno');
 
 include ('../../include/conexion.php');
 
+include ('../../include/menu.php'); // Menu.
+
 //
 
 if (isset($_POST['preg']) && isset($_POST['id'])){
@@ -15,6 +17,8 @@ if (isset($_POST['preg']) && isset($_POST['id'])){
 	$respuesta=$_POST['preg']; // variable que contiene la respuesta del usuario.
 
 	$pregid=$_POST['id']; // variable que contiene el ID de la pregunta contestada.
+
+	$examen=$_POST['ex'];
 
 // Consulta SQL que contiene la respuesta correcta de la pregunta contestada por el usuario.
 
@@ -70,22 +74,20 @@ if (isset($_POST['preg']) && isset($_POST['id'])){
 
 					$query=mysqli_query($conexion, $update);
 
-					?>
-
-					<script language='JavaScript'>
-
-					alert("La respuesta es incorrecta");
-
-					location.href='preguntas.php';
-
-					</script>
-
-					<?php
+					echo '<form action="preguntas.php" align="center" method="post">
+							<h3>Respuesta incorrecta!</h3>
+							<input type="text" hidden name="exam" value"'.$examen.'" />
+							<input type="submit" value="Continuar" />
+						</form>
+					';
 
 					//header('Location: preguntas.php');
 
 				}
 
 	}
+
+include ('../../include/footer.php');
+
 
 ?>

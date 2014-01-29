@@ -8,29 +8,65 @@ include ('../../include/sesion_alumno');
 
 include ('../../include/conexion.php');
 
-include ('../../include/menu.php'); // Menu.
+		if ($_SERVER['REQUEST_METHOD'] <> 'POST') {
+			
+			include ('../../include/menu.php'); // Menu.
+			
+			echo '<h2 align="center">Elige el tipo de examen que deseas hacer.</h2>';
 
-?>
+			echo '<form action="" align="center" method="post">
+					<select name="ex">';
+								
+					$examen="SELECT `examen`.`tipo` FROM `Test`.`examen`"; /*Hacemos un select del tipo de examen*/
+										
+						$query_examen=mysqli_query($conexion, $examen); /*Ejecutamos la consulta*/
+										
+						while ($tipo_examen=mysqli_fetch_array($query_examen)) { /*Iniciamos un while por cada fila devuelta por la consulta*/
+							/*Hacemos un select del id del tipo de examen*/
+						 	$examenid="SELECT `examen`.`examenid` FROM `Test`.`examen` where `examen`.`tipo`='".$tipo_examen['tipo']."'";
+							/*Ejecutamos la consulta*/
+							$query_examenid=mysqli_query($conexion, $examenid);
+							/*Capturamos el resultado*/
+							$id_examen=mysqli_fetch_array($query_examenid);
+							/*Imprimimos en value el id del examen y como nombre a elegir el tipo de examen*/
+							echo "<option value=".$id_examen['examenid'].">".$tipo_examen['tipo']."</option>";		
+								    	
+					   	}
 
-<p>
+			echo '</select>
+				<input type="submit" value="Mostrar"/>
+				</form>';
 
-	<form action="respuesta.php" method="post">
+		}
+		
+		else {
+		
+		include ('../../include/menu.php'); // Menu.
 
-	<table style="border-style:solid;" align="center">
-
-		<?php
+		echo '<form action="respuesta.php" method="post">
+				<table style="border-style:solid;" align="center">';
 
 		// SELECT que recoge los campos pregid,pregunta,r1,r2,r3,r4 filtrando por las que se encuentran
 
 		// sin contestar y el usuario que ha iniciado sesion. Por ultimo ordenamos aleatoriamente 
 
 		// indicando que solo nos devuelva un registro.
+		
+		$examen=$_POST['ex'];
+
+		if (isset($_POST['exam'])) { ## FALTA ARREGLAR QUE SALGAN TODAS LAS PREGUNTAS DESPUÉS DE RESPONDER UNA.
+			$examen=$_POST['exam'];
+		}
+
+		echo '<input type="text" hidden name="ex" value="'.$examen.'" />';
 
 		$selectPregunta="SELECT preguntas.pregid,pregunta,r1,r2,r3,r4 
 
 			FROM preguntas,preg_user 
 
 			WHERE preguntas.pregid = preg_user.pregid 
+
+			AND preguntas.examenid ='".$examen."' 
 
 			AND preg_user.correcta='2' 
 
@@ -69,8 +105,29 @@ include ('../../include/menu.php'); // Menu.
 			if (mysqli_num_rows($queryPreg))
 
 			{
+				$contar= "SELECT count(preguntas.pregid) 
+				
+					FROM preguntas,preg_user 
+				
+					WHERE preguntas.pregid = preg_user.pregid 
+				
+					AND preguntas.examenid ='".$examen."' 
+				
+					AND preg_user.correcta='2' 
+				
+					AND preg_user.userid='".$userActivo."'";
+
+					$queryContar=mysqli_query($conexion, $contar);
+
+					$contarQuery=mysqli_fetch_array($queryContar);
+
+					$numpregs=$contarQuery['count(preguntas.pregid)'];	
+
+
 
 				echo "<tr><td style='background:#5dd26c;padding:10px;'>".$pregunta."</td></tr>";
+
+				echo "<tr><td>Preguntas restantes: " . $numpregs . "</td></tr>";
 
 				echo "<tr><td><input type='text' name='id' hidden value='".$pregid."'/></td></tr>";
 
@@ -106,17 +163,9 @@ include ('../../include/menu.php'); // Menu.
 
 			}
 
-			
-
-		?>
-
-	</table>
-
-	</form>
-
-</p>
-
-<?php
+		echo '</table>
+			</form>';
+		}
 
 	include ('../../include/footer.php');
 

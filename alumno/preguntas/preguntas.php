@@ -10,6 +10,10 @@ include ('../../include/conexion.php');
 
 		if ($_SERVER['REQUEST_METHOD'] <> 'POST') {
 			
+			if (isset($_COOKIE['examen'])) {
+				setcookie('examen', '');
+			}
+
 			include ('../../include/menu.php'); // Menu.
 			
 			echo '<h2 align="center">Elige el tipo de examen que deseas hacer.</h2>';
@@ -41,6 +45,10 @@ include ('../../include/conexion.php');
 		
 		else {
 		
+		if(!isset($_COOKIE['examen'])){
+			setcookie('examen', $_POST['ex']);
+		}
+
 		include ('../../include/menu.php'); // Menu.
 
 		echo '<form action="respuesta.php" method="post">
@@ -54,11 +62,35 @@ include ('../../include/conexion.php');
 		
 		$examen=$_POST['ex'];
 
-		if (isset($_POST['exam'])) { ## FALTA ARREGLAR QUE SALGAN TODAS LAS PREGUNTAS DESPUÉS DE RESPONDER UNA.
-			$examen=$_POST['exam'];
+		if(isset($_COOKIE['examen']))
+		{
+			echo "<input type='text' hidden name='ex' value=".$_COOKIE['examen']." />"; 
+		} 													
+		else
+		{
+			echo '<input type="text" hidden name="ex" value="'.$examen.'" />';
+			
 		}
+		
+		if(isset($_COOKIE['examen'])){
+		
+		$selectPregunta="SELECT preguntas.pregid,pregunta,r1,r2,r3,r4 
 
-		echo '<input type="text" hidden name="ex" value="'.$examen.'" />';
+			FROM preguntas,preg_user 
+
+			WHERE preguntas.pregid = preg_user.pregid 
+
+			AND preguntas.examenid ='" .$_COOKIE['examen']. "' 
+
+			AND preg_user.correcta='2' 
+
+			AND preg_user.userid='".$userActivo."' 
+
+			ORDER BY RAND() LIMIT 1";	
+
+		}
+		
+		else{
 
 		$selectPregunta="SELECT preguntas.pregid,pregunta,r1,r2,r3,r4 
 
@@ -66,13 +98,15 @@ include ('../../include/conexion.php');
 
 			WHERE preguntas.pregid = preg_user.pregid 
 
-			AND preguntas.examenid ='".$examen."' 
+			AND preguntas.examenid ='" .$examen. "' 
 
 			AND preg_user.correcta='2' 
 
 			AND preg_user.userid='".$userActivo."' 
 
-			ORDER BY RAND() LIMIT 1";			
+			ORDER BY RAND() LIMIT 1";
+
+		} 
 
 		// Enviamos la consulta.
 
@@ -105,6 +139,30 @@ include ('../../include/conexion.php');
 			if (mysqli_num_rows($queryPreg))
 
 			{
+				if(isset($_COOKIE['examen'])){
+													 
+				$contar= "SELECT count(preguntas.pregid) 
+				
+					FROM preguntas,preg_user 
+				
+					WHERE preguntas.pregid = preg_user.pregid 
+				
+					AND preguntas.examenid ='".$_COOKIE['examen']."' 
+				
+					AND preg_user.correcta='2' 
+				
+					AND preg_user.userid='".$userActivo."'";
+
+					$queryContar=mysqli_query($conexion, $contar);
+
+					$contarQuery=mysqli_fetch_array($queryContar);
+
+					$numpregs=$contarQuery['count(preguntas.pregid)'];
+
+
+				} 
+				else{
+
 				$contar= "SELECT count(preguntas.pregid) 
 				
 					FROM preguntas,preg_user 
@@ -121,7 +179,10 @@ include ('../../include/conexion.php');
 
 					$contarQuery=mysqli_fetch_array($queryContar);
 
-					$numpregs=$contarQuery['count(preguntas.pregid)'];	
+					$numpregs=$contarQuery['count(preguntas.pregid)'];
+
+				}
+					
 
 
 

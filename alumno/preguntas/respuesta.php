@@ -48,17 +48,13 @@ if (isset($_POST['preg']) && isset($_POST['id'])){
 
 					$query=mysqli_query($conexion, $update);
 
-					?>
-
-					<script language='JavaScript'>
-
-					alert("La respuesta es correcta");
-
-					location.href='preguntas.php';
-
-					</script>
-
-					<?php
+					echo '<form action="preguntas.php" align="center" method="post">
+							<h3>Respuesta correcta!</h3>
+							<input type="text" hidden name="exam" value"'.$examen.'" />
+							<input type="submit" value="Continuar" />
+						</form>
+					';
+					
 
 					//header('Location: preguntas.php');
 

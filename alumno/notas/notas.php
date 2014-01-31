@@ -16,20 +16,31 @@ include ('../../include/menu.php');
 
 // el nº de preguntas falladas y el nº de preguntas acertadas filtrado por el usuario que ha iniciado sesion.
 
-	$select_notas_user="SELECT apellido1,apellido2,nombre,
+	$exams="SELECT COUNT(examenid) AS NumExams FROM Test.examen";
 
-	COUNT(preg_user.pregid) as PreguntasBBDD,
+	$select_exams=mysqli_query($conexion, $exams);
 
-	(SELECT COUNT(correcta) FROM preg_user WHERE correcta='2' AND userid='".$userActivo."') as PreguntasSinContestar,
+	$queryExams=mysqli_fetch_array($select_exams);
 
-	(SELECT COUNT(correcta) FROM preg_user WHERE correcta='1' AND userid='".$userActivo."') as PreguntasFalladas,
+	for ($i=1; $i <= $queryExams['NumExams']; $i++) { 
 
-	(SELECT COUNT(correcta) FROM preg_user WHERE correcta='0' AND userid='".$userActivo."') as PreguntasAcertadas
+	$select_notas_user="SELECT apellido1,apellido2,nombre,tipo,
 
-	FROM usuario,preguntas,preg_user WHERE usuario.userid = preg_user.userid AND preguntas.pregid = preg_user.pregid 
+	COUNT(preg_user.pregid)  as PreguntasBBDD,
 
-	AND usuario.userid='".$userActivo."'";
+	(SELECT COUNT(correcta) FROM preguntas,preg_user,examen WHERE preguntas.pregid = preg_user.pregid 
+	AND examen.examenid = preguntas.examenid AND correcta='2' AND examen.examenid='".$i."' AND userid='".$userActivo."') as PreguntasSinContestar,
 
+	(SELECT COUNT(correcta) FROM preguntas,preg_user,examen WHERE preguntas.pregid = preg_user.pregid 
+	AND examen.examenid = preguntas.examenid AND correcta='1' AND examen.examenid='".$i."' AND userid='".$userActivo."') as PreguntasFalladas,
+
+	(SELECT COUNT(correcta) FROM preguntas,preg_user,examen WHERE preguntas.pregid = preg_user.pregid 
+	AND examen.examenid = preguntas.examenid AND correcta='0' AND examen.examenid='".$i."' AND userid='".$userActivo."') as PreguntasAcertadas
+
+	FROM usuario,preguntas,preg_user,examen WHERE usuario.userid = preg_user.userid AND preguntas.pregid = preg_user.pregid 
+	
+	AND examen.examenid = preguntas.examenid AND usuario.userid='".$userActivo."' and examen.examenid='".$i."'";
+// 
 	// Lanzamos Consulta.
 
 		$sel_notas_user=mysqli_query($conexion, $select_notas_user);
@@ -51,6 +62,8 @@ include ('../../include/menu.php');
 			$PreguntasFalladas=$query['PreguntasFalladas'];
 
 			$PreguntasAcertadas=$query['PreguntasAcertadas'];
+
+			$TipoExamen=$query['tipo'];
 
 			// Realizamos Operciones.
 
@@ -92,7 +105,7 @@ include ('../../include/menu.php');
 
 			echo "<p align='center'><table style='border:solid;'>";
 
-				echo "<tr><td style='background:#880015;color:white;padding:10px;' colspan='2'>Tus resultados $apellido1 $apellido2, $nombre</td></tr>";
+				echo "<tr><td style='background:#880015;color:white;padding:10px;' colspan='2'>Tus resultados en $TipoExamen,	 $apellido1 $apellido2, $nombre</td></tr>";
 
 				echo "<tr><td>Preguntas totales:</td><td>$PreguntasBBDD</td></tr>";
 
@@ -117,10 +130,12 @@ include ('../../include/menu.php');
 					}
 
 			echo "</p></table>";
-
+	}
 // Cerramos conexion a la BBDD.
 
-mysqli_close($conexion);
+	mysqli_close($conexion);
+
+
 
 include ('../../include/footer.php');
 

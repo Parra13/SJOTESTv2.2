@@ -12,32 +12,6 @@ include('../../include/conexion.php');
 
 include('../../include/menu.php');
 
-?>
-
-<table border="1" align="center" style="text-align:center;">
-
-<tr>
-
-	<th>Apellidos</th>
-
-	<th>Nombre</th>
-
-	<th>Preguntas Total</th>
-
-	<th>Aciertos</th>
-
-	<th>Fallos</th>
-
-	<th>No Respondidas</th>
-
-	<th>% Contestado</th>
-
-	<th>% de Aciertos</th>
-
-</tr>
-
-<?php
-
 	// Consulta SQL.
 
 	$select_user="SELECT userid FROM usuario WHERE administrador='0'";
@@ -50,23 +24,33 @@ include('../../include/menu.php');
 
 			$userid=$alumno['userid'];
 
+			$exams="SELECT tipo FROM Test.examen";
+
+			$select_exams=mysqli_query($conexion, $exams);
+
+			while ($queryExams=mysqli_fetch_array($select_exams)) {
+				
 			// // Consulta SQL, que devuelve el nombre, apellidos, el registro total del preguntas, el nº de preguntas sin contestar,
 
 			// el nº de preguntas falladas y el nº de preguntas acertadas por todos los usuarios.
+			$examen=$queryExams['tipo'];
 
 			$select_notas_user="SELECT apellido1,apellido2,nombre,
 
 			COUNT(preg_user.pregid) as PreguntasBBDD,
 
-			(SELECT COUNT(correcta) FROM preg_user WHERE correcta='2' AND userid='".$userid."') as PreguntasSinContestar,
+			(SELECT COUNT(correcta) FROM preguntas,preg_user,examen WHERE preguntas.pregid = preg_user.pregid 
+			AND examen.examenid = preguntas.examenid AND correcta='2' AND examen.tipo='".$examen."' AND userid='".$userid."') as PreguntasSinContestar,
 
-			(SELECT COUNT(correcta) FROM preg_user WHERE correcta='1' AND userid='".$userid."') as PreguntasFalladas,
+			(SELECT COUNT(correcta) FROM preguntas,preg_user,examen WHERE preguntas.pregid = preg_user.pregid 
+			AND examen.examenid = preguntas.examenid AND correcta='1' AND examen.tipo='".$examen."' AND userid='".$userid."') as PreguntasFalladas,
 
-			(SELECT COUNT(correcta) FROM preg_user WHERE correcta='0' AND userid='".$userid."') as PreguntasAcertadas
+			(SELECT COUNT(correcta) FROM preguntas,preg_user,examen WHERE preguntas.pregid = preg_user.pregid 
+			AND examen.examenid = preguntas.examenid AND correcta='0' AND examen.tipo='".$examen."' AND userid='".$userid."') as PreguntasAcertadas
 
-			FROM usuario,preguntas,preg_user WHERE usuario.userid = preg_user.userid AND preguntas.pregid = preg_user.pregid 
+			FROM usuario,preguntas,preg_user,examen WHERE usuario.userid = preg_user.userid AND preguntas.pregid = preg_user.pregid 
 
-			AND usuario.userid='".$userid."'";
+			AND usuario.userid='".$userid."' AND examen.examenid = preguntas.examenid AND examen.tipo='".$examen."'";
 
 			// Lanzamos consulta.
 
@@ -128,11 +112,13 @@ include('../../include/menu.php');
 
 			// Por ultimo mostramos los datos.
 
+			// Para solucionar el problema de repetición de la cabecera con el nombre del alumno se incluye sólo una vez la cabecera
+			// de esta manera las variables ya están delcaradas y el nombre del alumno sale completo.
+			include_once '../../include/cabecera_notas.php';
+
 			echo "<tr>";
 
-				echo "<td>".$apellido1." ".$apellido2."</td>";
-
-				echo "<td>".$alumno."</td>";
+				echo "<td>".$examen."</td>";
 
 				echo "<td>".$total_preg."</td>";
 
@@ -163,7 +149,7 @@ include('../../include/menu.php');
 			echo "</tr>";
 
 	}
-
+}
 	?>
 
 </table>

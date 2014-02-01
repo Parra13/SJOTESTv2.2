@@ -40,7 +40,7 @@ include ('../../include/menu.php');
 	FROM usuario,preguntas,preg_user,examen WHERE usuario.userid = preg_user.userid AND preguntas.pregid = preg_user.pregid 
 	
 	AND examen.examenid = preguntas.examenid AND usuario.userid='".$userActivo."' and examen.examenid='".$i."'";
-// 
+ 
 	// Lanzamos Consulta.
 
 		$sel_notas_user=mysqli_query($conexion, $select_notas_user);

@@ -54,15 +54,19 @@ if ($_GET["busqueda"]!=""){
 
 				<td><input type="submit" value="Buscar palabra clave"></td>
 
-				<td><input type="text" name="busqueda" size="22" maxlength="150"></td> 
-
+				<td><input type="text" name="busqueda" size="22" maxlength="150"></td>
+				
 	</form>
+	
+			<form action="mod_preg.php" method="post">
 
-				<td><a href="mod_preg.php">Mostrar todas las preguntas</a></td>
+				<td><input type="submit" value="Mostrar todas"></td>
 
+			</form>
+			
 			</tr>
 
-		</table>
+	</table>
 
 <!-- -->
 
@@ -72,6 +76,24 @@ if ($_GET["busqueda"]!=""){
 
 <?php
 
+if ($_SERVER['REQUEST_METHOD']=='POST') {
+	
+	$select="SELECT * FROM preguntas ".$busqueda;
+	
+	$query=mysqli_query($conexion, $select);
+	
+	while($fila=mysqli_fetch_array($query)){
+		
+		$id=$fila['pregid'];
+		
+		$preg=$fila['pregunta'];
+		
+		echo "<tr><td>".$id."</td><td>".$preg."</td><td><a href='mod_preg_del.php?id=".$id."'>Modificar</a></td></tr>";  
+	
+	}
+}
+
+else {
 // Limite de la paginacion: 5 registros.
 
 $tm_pagina="5";
@@ -264,11 +286,10 @@ $tm_pagina="5";
 
 		echo "</table>";
 
-?>
+}
 
-<p>
 
-		<?php
+
 
 			// Validamos los resultados que se producen en ac_pregunta.php y que redireccionan
 
@@ -309,12 +330,6 @@ $tm_pagina="5";
 					//exit(1);		
 
 				}
-
-		?>
-
-</p>
-
-<?php 
 
 // Incluimos footer de la aplicacion.
 

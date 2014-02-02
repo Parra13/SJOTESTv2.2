@@ -2,7 +2,7 @@
 
 echo "<table border='1' align='center' style='text-align:center;'>
 
-			<tr><td style='background:#880015;color:white;padding:10px;' colspan='8'>Resultados de: ".$apellido1." ".$apellido2.", " .$alumno."</td></tr>
+			<tr><td style='background:#880015;color:white;padding:10px;' colspan='8'>Resultados de: ".$apellido1." ".$apellido2.", " .$nombre."</td></tr>
 
 			<tr>
 				

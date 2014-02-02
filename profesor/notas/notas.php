@@ -14,7 +14,7 @@ include('../../include/menu.php');
 
 	// Consulta SQL.
 
-	$select_user="SELECT userid FROM usuario WHERE administrador='0'";
+	$select_user="SELECT userid,nombre,apellido1,apellido2 FROM Test.usuario WHERE administrador='0'";
 
 	$users=mysqli_query($conexion, $select_user);
 
@@ -23,6 +23,14 @@ include('../../include/menu.php');
 		while($alumno=mysqli_fetch_array($users)){
 
 			$userid=$alumno['userid'];
+
+			$nombre=$alumno['nombre'];
+
+			$apellido1=$alumno['apellido1'];
+
+			$apellido2=$alumno['apellido2'];
+
+			include '../../include/cabecera_notas.php';				
 
 			$exams="SELECT tipo FROM Test.examen";
 
@@ -114,7 +122,6 @@ include('../../include/menu.php');
 
 			// Para solucionar el problema de repetición de la cabecera con el nombre del alumno se incluye sólo una vez la cabecera
 			// de esta manera las variables ya están delcaradas y el nombre del alumno sale completo.
-			include_once '../../include/cabecera_notas.php';
 
 			echo "<tr>";
 

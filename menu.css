@@ -152,6 +152,11 @@ background:#e4cc69;
 
 }
 
+#centrado>table{
+	margin-bottom: 10px;
+	margin: auto;
+}
+
 
 
 a {color:#880015;text-decoration: none;}

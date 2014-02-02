@@ -89,8 +89,17 @@ if ($_SERVER['REQUEST_METHOD']=='POST') {
 		$preg=$fila['pregunta'];
 		
 		echo "<tr><td>".$id."</td><td>".$preg."</td><td><a href='mod_preg_del.php?id=".$id."'>Modificar</a></td></tr>";  
-	
+
 	}
+
+	echo "<table hidden id='wrap' align='center' style='border:solid 1px;font-style: italic;'>";
+
+	echo "<tr><td>N&uacute;mero de registros encontrados: ".$num_total_registros."</td></tr>";
+
+	echo "<tr><td>Mostrando p&aacute;gina ".$pagina." de ".$paginas_total."</td></tr>";
+
+	echo "</table></div>";
+
 }
 
 else {
@@ -271,8 +280,7 @@ $tm_pagina="5";
 		?>
 
 </p>
-
-</div>
+</div> 
 
 		<?php
 
@@ -286,12 +294,7 @@ $tm_pagina="5";
 
 		echo "</table>";
 
-}
-
-
-
-
-			// Validamos los resultados que se producen en ac_pregunta.php y que redireccionan
+}			// Validamos los resultados que se producen en ac_pregunta.php y que redireccionan
 
 			// a estos datos. En este caso validamos si se ha eliminado o bien actualizado.
 

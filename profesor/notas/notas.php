@@ -94,12 +94,12 @@ include('../../include/menu.php');
 
 				// Warning indicando un mensaje.
 
-					if ($contestadas_usuario=='0'){
+					if ($contestadas_usuario=='0' || $total_preg=='0'){
 
 					// Si es igual a 0, la variable se queda a cero.
 
 						$porcentaje_acierto='0';
-
+						$porcentaje_contestadas='0';
 					}
 
 					else {
@@ -107,10 +107,10 @@ include('../../include/menu.php');
 					// Si no es cero, realiza la operacion de porcentaje de preguntas acertadas.
 
 						$porcentaje_acierto=($preguntasAcertadas/$contestadas_usuario)*100;	
-
+						$porcentaje_contestadas=($contestadas_usuario/$total_preg)*100;
 					}
 
-				$porcentaje_contestadas=($contestadas_usuario/$total_preg)*100;
+				
 
 			// Los porcentajes devuelven muchos decimales, con sprintf mostramos solo dos decimales.
 

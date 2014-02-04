@@ -16,13 +16,13 @@ include ('../../include/menu.php');
 
 // el nº de preguntas falladas y el nº de preguntas acertadas filtrado por el usuario que ha iniciado sesion.
 
-	$exams="SELECT COUNT(examenid) AS NumExams FROM Test.examen";
+	$exams="SELECT (examenid) AS NumExams FROM Test.examen";
 
 	$select_exams=mysqli_query($conexion, $exams);
 
-	$queryExams=mysqli_fetch_array($select_exams);
+	while ($queryExams=mysqli_fetch_array($select_exams)) {
 
-	for ($i=1; $i <= $queryExams['NumExams']; $i++) { 
+	$i=$queryExams['NumExams'];
 
 	$select_notas_user="SELECT apellido1,apellido2,nombre,tipo,
 
@@ -75,12 +75,13 @@ include ('../../include/menu.php');
 
 				// Warning indicando un mensaje.
 
+				if ($PreguntasBBDD <> '0'){
+					
 					if ($contestadas_usuario=='0'){
 
 					// Si es igual a 0, la variable se queda a cero.
 
 						$porcentaje_acierto='0';
-
 					}
 
 					else {
@@ -88,12 +89,13 @@ include ('../../include/menu.php');
 					// Si no es cero, realiza la operacion de porcentaje de preguntas acertadas.
 
 						$porcentaje_acierto=($PreguntasAcertadas/$contestadas_usuario)*100;	
-
+						
 					}
-
+					
+					$porcentaje_contestadas=($contestadas_usuario/$PreguntasBBDD)*100;
 				// Porcentaje de Preguntas contestadas.
 
-				$porcentaje_contestadas=($contestadas_usuario/$PreguntasBBDD)*100;
+				
 
 			// Los porcentajes devuelven muchos decimales, con sprintf mostramos solo dos decimales.
 
@@ -105,7 +107,7 @@ include ('../../include/menu.php');
 
 			echo "<p align='center'><table style='border:solid;'>";
 
-				echo "<tr><td style='background:#880015;color:white;padding:10px;' colspan='2'>Tus resultados en $TipoExamen,	 $apellido1 $apellido2, $nombre</td></tr>";
+				echo "<tr><td style='background:#880015;color:white;padding:10px;' colspan='2'>Tus resultados en $TipoExamen, $apellido1 $apellido2, $nombre</td></tr>";
 
 				echo "<tr><td>Preguntas totales:</td><td>$PreguntasBBDD</td></tr>";
 
@@ -130,6 +132,7 @@ include ('../../include/menu.php');
 					}
 
 			echo "</p></table>";
+			}
 	}
 // Cerramos conexion a la BBDD.
 

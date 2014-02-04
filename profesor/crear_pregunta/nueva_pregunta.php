@@ -38,19 +38,13 @@ include("../../include/menu.php");
 							<select name="ex"> <!-- Añadimos un imput para elegir a qué examen pertenece la pregunta -->
 								<?php ## Abrimos una etiqueta php que, dentro del select haga los selects de la BD.
 			
-									$examen="SELECT `examen`.`tipo` FROM `Test`.`examen`"; /*Hacemos un select del tipo de examen*/
+									$examen="SELECT `examen`.`tipo`,examenid FROM `Test`.`examen`"; /*Hacemos un select del tipo de examen*/
 										
 									$query_examen=mysqli_query($conexion, $examen); /*Ejecutamos la consulta*/
 										
 									while ($tipo_examen=mysqli_fetch_array($query_examen)) { /*Iniciamos un while por cada fila devuelta por la consulta*/
-										/*Hacemos un select del id del tipo de examen*/
-										$examenid="SELECT `examen`.`examenid` FROM `Test`.`examen` where `examen`.`tipo`='".$tipo_examen['tipo']."'";
-										/*Ejecutamos la consulta*/
-										$query_examenid=mysqli_query($conexion, $examenid);
-										/*Capturamos el resultado*/
-										$id_examen=mysqli_fetch_array($query_examenid);
-										/*Imprimimos en value el id del examen y como nombre a elegir el tipo de examen*/
-										echo "<option value=".$id_examen['examenid'].">".$tipo_examen['tipo']."</option>";		
+										
+										echo "<option value=".$tipo_examen['examenid'].">".$tipo_examen['tipo']."</option>";		
 								    	
 							    	}
 								    	

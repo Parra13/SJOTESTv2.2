@@ -32,6 +32,8 @@
 
 							<li><a href="$urlRoot/profesor/crear_pregunta/nueva_pregunta.php">Crear Pregunta</a></li>
 
+							<li><a href="$urlRoot/profesor/crear_examen/crear_examen.php">Crear Examen</a></li>
+
 							<li><a href="$urlRoot/profesor/mod_pregunta/mod_preg.php">Modificar Pregunta</a></li>
 
 							<li><a href="$urlRoot/profesor/notas/notas.php">Ver Resultados</a></li>
